@@ -63,3 +63,7 @@ class UserInput:
             isMatch = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
             if isMatch == None:
                 print("Please provide a correct time format (08:00).")
+<<<<<<< HEAD
+=======
+                
+>>>>>>> cf504d94b03596234639f4a30a61ea041737cb2a
