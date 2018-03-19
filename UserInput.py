@@ -1,4 +1,6 @@
 import re
+from _datetime import *
+
 
 class UserInput:
     """Patientregistry input by the user"""
@@ -21,7 +23,7 @@ class UserInput:
         isMatch=None
         while (isMatch == None):
             self.LastName=input("Last Name:")
-            isMatch = re.fullmatch(r"^[A-Z]{1}[a-z]{0,}[?.]{0,1}([ ][A-Z]{1}[a-z]{0,}[.]|[ ][A-Z]{1}[a-z]{0,})|([ ][A-Z]{1}[a-z]{0,}|[-][A-Z]{1}[a-z]{0,}|[A-Z]{1}[a-z]{0,}[^ ])$", self.LastName)
+            isMatch = re.fullmatch(r"^[A-Z]{1}[a-z]{0,}[.]([ ][A-Z]{1}[a-z]{0,}[-][A-Z]{1}[a-z]{0,}|[ ][A-Z]{1}[a-z]{0,}[ ][A-Z]{1}[a-z]{0,}|[ ][A-Z]{1}[a-z]{0,})?|([A-Z]{1}[a-z]{0,}[-][A-Z]{1}[a-z]{0,}|[A-Z]{1}[a-z]{0,}[ ][A-Z][a-z]{0,}|[A-Z]{1}[a-z]{0,})$", self.LastName)
             if isMatch == None:
                 print("Please provide the first name in correct format (eg.:'John' or 'J.' or 'Smith Black')")
 
@@ -47,7 +49,11 @@ class UserInput:
         isMatch=None
         while(isMatch == None):
             self.AppointmentDate=input("Appointment Date (correct format: 1900-01-01):")
-            isMatch = re.fullmatch(r"^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$", self.AppointmentDate)
+            isMatch = re.fullmatch(r"^[2][0-9]{3}[-][0-1][0-9]{2}[-][0-9]{2}$", self.AppointmentDate)
+            appointmentdate = datetime.strptime(self.AppointmentDate,'%Y-%m-%d')
+            if appointmentdate < datetime.now() - timedelta(days=1):
+                isMatch=None
+                print("Please provide the date at least today")
             if isMatch == None:
                 print("Please provide a correct date format (1900-01-01).")
 
@@ -57,4 +63,3 @@ class UserInput:
             isMatch = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
             if isMatch == None:
                 print("Please provide a correct time format (08:00).")
-                print("test")
