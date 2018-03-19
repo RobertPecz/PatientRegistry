@@ -37,5 +37,23 @@ class UserInput:
                 else:
                     print("Not a number or not in the correct format. Please give a number between 0 and 150.")
 
-        #self.PhoneNumber=input("Phone number:")
-        #self.AppointmentDate=input("Appointment date:")
+        isMatch=None
+        while(isMatch == None):
+            self.Phonenumber=input("Phone number(correct format: +36-00-000-0000):")
+            isMatch = re.fullmatch(r"^[+][3][6][-][0-9]{2}[-][0-9]{3}[-][0-9]{4}$", self.Phonenumber)
+            if isMatch == None:
+                print("Please provide a correct phone number format (+36-00-000-0000).")
+
+        isMatch=None
+        while(isMatch == None):
+            self.AppointmentDate=input("Appointment Date (correct format: 1900-01-01):")
+            isMatch = re.fullmatch(r"^[0-9]{4}[-][0-9]{2}[-][0-9]{2}$", self.AppointmentDate)
+            if isMatch == None:
+                print("Please provide a correct date format (1900-01-01).")
+
+        isMatch=None
+        while(isMatch == None):
+            self.AppointmentTime=input("Appointment time (correct format: 00:00):")
+            isMatch = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
+            if isMatch == None:
+                print("Please provide a correct time format (08:00).")
