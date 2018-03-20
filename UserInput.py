@@ -80,3 +80,13 @@ class UserInput:
             if is_match is None:
                 print("Please provide a correct time format (08:00).")
 
+    def change_name(self):
+        print("Please provide name")
+        is_match = None
+        while is_match is None:
+            self.FirstName = input("First name:")
+            is_match = re.fullmatch(r"^[A-Z]{1}[a-z]{0,}[? ]{0,}([A-Z]{1}[a-z]{0,}|[^ ])$", self.FirstName)
+            if is_match is None:
+                print("Please provide the first name in correct format (eg.:'Smith' or 'Smith-Black' or 'Smith Black')")
+
+    
