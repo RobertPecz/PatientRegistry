@@ -1,11 +1,10 @@
 import re
-from _datetime import *
+from datetime import *
 
 
 class UserInput:
     """Patientregistry input by the user"""
     #todo:not just alldata but all kind of data, not just creating it but modifying
-    #todo:complete regex phonenumber and appointmentdate
 
     def safe_cast(self,val,to_type, default=None):
         try:
@@ -36,14 +35,14 @@ class UserInput:
             if self.Age is None:
                 print("Not a number or not in the correct format. Please give a number between 0 and 150.")
             else:
-                if(self.Age>=0 and self.Age<=150):
+                if(self.Age >= 0 and self.Age <= 150):
                     is_in_range = True
                 else:
                     print("Not a number or not in the correct format. Please give a number between 0 and 150.")
 
         is_match = None
         while is_match is None:
-            self.Phonenumber=input("Phone number(correct format: +36-00-000-0000):")
+            self.Phonenumber = input("Phone number(correct format: +36-00-000-0000):")
             is_match = re.fullmatch(r"^[+][3][6][-][0-9]{2}[-][0-9]{3}[-][0-9]{4}$", self.Phonenumber)
             if is_match is None:
                 print("Please provide a correct phone number format (+36-00-000-0000).")
@@ -65,8 +64,19 @@ class UserInput:
 
         is_match=None
         while is_match is None :
-            self.AppointmentTime=input("Appointment time (correct format: 00:00):")
+            self.AppointmentTime = input("Appointment time (correct format: 00:00):")
             is_match = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
+            start_time = datetime.strptime('08:00','%H:%M')
+            end_time = datetime.strptime('16:00','%H:%M')
+            try:
+                appointment_time = datetime.strptime(self.AppointmentTime,'%H:%M')
+            except ValueError:
+                print("Please provide a valid time between 08:00 and 16:00")
+                is_match = None
+                continue
+            if appointment_time < start_time or appointment_time > end_time:
+                is_match = None
+                print("Please provide a valid time between 08:00 and 16:00")
             if is_match is None:
                 print("Please provide a correct time format (08:00).")
 
