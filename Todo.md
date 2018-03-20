@@ -1,5 +1,0 @@
-- [ ] Make another table in sql server foreign key to Patient table PK 
-- [ ] Add mother maiden name to sql server Patient table 
-- [ ] If a customer name(first and last) date of birth and mother maiden name are already in the table prevent from upload because of duplication 
-- [ ] Patientmodify.py add patient data modification defs for all data (eg.: first name, last name etc.) 
-- [ ] Make a simple menusystem
