@@ -32,7 +32,7 @@ class UserInput:
         is_match = None
         while is_match is None:
             self.LastName=input("Last Name:")
-            is_match = re.fullmatch(r"^[A-Z]{1}[a-z]{0,}[.]([ ][A-Z]{1}[a-z]{0,}[-][A-Z]{1}[a-z]{0,}|[ ][A-Z]{1}[a-z]{0,}[ ][A-Z]{1}[a-z]{0,}|[ ][A-Z]{1}[a-z]{0,})?|([A-Z]{1}[a-z]{0,}[-][A-Z]{1}[a-z]{0,}|[A-Z]{1}[a-z]{0,}[ ][A-Z][a-z]{0,}|[A-Z]{1}[a-z]{0,})$", self.LastName)
+            is_match = re.fullmatch(r"^([A-Z][a-z]{0,})?(?(1)([.][ ][A-Z][a-z]{0,}[.][ ][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}[.][ ][A-Z][a-z]{0,}[-][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}[.]|[.][ ][A-Z][a-z]{0,}[-][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}|[-][A-Z][a-z]{0,})|[A-Z][a-z]{0,})$", self.LastName)
             if is_match is None:
                 print("Please provide the first name in correct format (eg.:'John' or 'J.' or 'Smith Black')")
 
@@ -108,7 +108,7 @@ class UserInput:
         while is_match is None:
             self.LastName = input("Last Name:")
             is_match = re.fullmatch(
-                r"^[A-Z]{1}[a-z]{0,}[.]([ ][A-Z]{1}[a-z]{0,}[-][A-Z]{1}[a-z]{0,}|[ ][A-Z]{1}[a-z]{0,}[ ][A-Z]{1}[a-z]{0,}|[ ][A-Z]{1}[a-z]{0,})?|([A-Z]{1}[a-z]{0,}[-][A-Z]{1}[a-z]{0,}|[A-Z]{1}[a-z]{0,}[ ][A-Z][a-z]{0,}|[A-Z]{1}[a-z]{0,})$",
+                r"^([A-Z][a-z]{0,})?(?(1)([.][ ][A-Z][a-z]{0,}[.][ ][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}[.][ ][A-Z][a-z]{0,}[-][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}[.]|[.][ ][A-Z][a-z]{0,}[-][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}|[-][A-Z][a-z]{0,})|[A-Z][a-z]{0,})$",
                 self.LastName)
             if is_match is None:
                 print("Please provide the first name in correct format (eg.:'John' or 'J.' or 'Smith Black')")
