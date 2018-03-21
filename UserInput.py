@@ -5,6 +5,8 @@ from datetime import *
 class UserInput:
     """Patient registry input by the user"""
 
+#Adding Mother maiden name variable into __init__ and to adding new patient and a separate def with regex
+
     def __init__(self):
         self.FirstName = None
         self.LastName = None
