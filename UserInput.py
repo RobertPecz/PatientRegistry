@@ -1,11 +1,8 @@
 import re
 from datetime import *
 
-
 class UserInput:
     """Patient registry input by the user"""
-
-#Adding Mother maiden name variable into __init__ and to adding new patient and a separate def with regex
 
     def __init__(self):
         self.FirstName = None
@@ -22,8 +19,43 @@ class UserInput:
         except (ValueError, TypeError):
             return default
 
+    def dumptime(self):
+        is_match = None
+        while is_match is None:
+            self.AppointmentDate = input("Appointment Date (correct format: 1900-01-01):")
+            is_match = re.fullmatch(r"^[2][0-9]{3}[-][0-1][0-9]{1}[-][0-9]{2}$", self.AppointmentDate)
+            try:
+                self.AppointmentDate = datetime.strptime(self.AppointmentDate, '%Y-%m-%d')
+            except ValueError:
+                print("Please provide a valid date between 01-01 and 12-31.")
+                continue
+            if self.AppointmentDate < datetime.now() - timedelta(days=1):
+                is_match = None
+                print("Please provide the date at least today")
+            if is_match is None:
+                print("Please provide a correct date format (1900-01-01).")
+
+            self.AppointmentTime = input("Appointment time (correct format: 00:00):")
+            is_match = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
+            start_time = time(hour=8,minute=0)
+            end_time = time(hour=16, minute=0)
+            try:
+                self.AppointmentTime = datetime.strptime(self.AppointmentTime, '%H:%M').time()
+                self.AppointmentDate = datetime.combine(self.AppointmentDate,self.AppointmentTime)
+            except ValueError:
+                print("Please provide a valid time between 08:00 and 16:00")
+                is_match = None
+                continue
+            if self.AppointmentTime < start_time or self.AppointmentTime > end_time:
+                is_match = None
+                print("Please provide a valid time between 08:00 and 16:00")
+            if is_match is None:
+                print("Please provide a correct time format (08:00).")
+
     def adding_new_patient(self):
         # Adding a new customer
+
+        # Adding the first name
         print("Please provide the following data's: First name, Last name, Age, Phone number, Appointment date")
         is_match = None
         while is_match is None:
@@ -32,6 +64,7 @@ class UserInput:
             if is_match is None:
                 print("Please provide the first name in correct format (eg.:'Smith' or 'Smith-Black' or 'Smith Black')")
 
+        # Adding the last name
         is_match = None
         while is_match is None:
             self.LastName=input("Last Name:")
@@ -39,6 +72,7 @@ class UserInput:
             if is_match is None:
                 print("Please provide the first name in correct format (eg.:'John' or 'J.' or 'Smith Black')")
 
+        # Adding the Date of birth
         is_match = None
         while is_match is None:
             self.Dob = input("Date of Birth (correct format: 1900-01-01):")
@@ -54,6 +88,7 @@ class UserInput:
             if is_match is None:
                 print("Please provide a correct date format (1900-01-01).")
 
+        # Adding the mother maiden name
         is_match = None
         while is_match is None:
             self.MotherMaidenName = input("Mother Maiden name (correct format: Sue Doe or Sue Doe-Black or Sue Doe Black or Sue D. Black.):")
@@ -61,6 +96,7 @@ class UserInput:
             if is_match is None:
                 print("Please provide the mother maiden name in a correct form eg.: Sue Doe or Sue Doe-Black or Sue Doe Black or Sue D. Black")
 
+        # Adding the phone number
         is_match = None
         while is_match is None:
             self.Phone_number = input("Phone number(correct format: +36-00-000-0000):")
@@ -68,34 +104,34 @@ class UserInput:
             if is_match is None:
                 print("Please provide a correct phone number format (+36-00-000-0000).")
 
+        # Adding the appointment date and time
         is_match = None
-        while is_match is None :
+        while is_match is None:
             self.AppointmentDate = input("Appointment Date (correct format: 1900-01-01):")
             is_match = re.fullmatch(r"^[2][0-9]{3}[-][0-1][0-9]{1}[-][0-9]{2}$", self.AppointmentDate)
             try:
-                appointment_date = datetime.strptime(self.AppointmentDate,'%Y-%m-%d')
+                self.AppointmentDate = datetime.strptime(self.AppointmentDate, '%Y-%m-%d')
             except ValueError:
                 print("Please provide a valid date between 01-01 and 12-31.")
                 continue
-            if appointment_date < datetime.now() - timedelta(days=1):
+            if self.AppointmentDate < datetime.now() - timedelta(days=1):
                 is_match = None
                 print("Please provide the date at least today")
             if is_match is None:
                 print("Please provide a correct date format (1900-01-01).")
 
-        is_match=None
-        while is_match is None :
             self.AppointmentTime = input("Appointment time (correct format: 00:00):")
             is_match = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
-            start_time = datetime.strptime('08:00','%H:%M')
-            end_time = datetime.strptime('16:00','%H:%M')
+            start_time = time(hour=8, minute=0)
+            end_time = time(hour=16, minute=0)
             try:
-                appointment_time = datetime.strptime(self.AppointmentTime,'%H:%M')
+                self.AppointmentTime = datetime.strptime(self.AppointmentTime, '%H:%M').time()
+                self.AppointmentDate = datetime.combine(self.AppointmentDate, self.AppointmentTime)
             except ValueError:
                 print("Please provide a valid time between 08:00 and 16:00")
                 is_match = None
                 continue
-            if appointment_time < start_time or appointment_time > end_time:
+            if self.AppointmentTime < start_time or self.AppointmentTime > end_time:
                 is_match = None
                 print("Please provide a valid time between 08:00 and 16:00")
             if is_match is None:
@@ -161,38 +197,34 @@ class UserInput:
                 print("Please provide a correct phone number format (+36-00-000-0000).")
 
     def change_appointment_date(self):
-        # Change appointment date
-        print("Provide appointment date.")
+        # Change appointment date and time
+        is_match = None
         while is_match is None:
             self.AppointmentDate = input("Appointment Date (correct format: 1900-01-01):")
             is_match = re.fullmatch(r"^[2][0-9]{3}[-][0-1][0-9]{1}[-][0-9]{2}$", self.AppointmentDate)
             try:
-                appointment_date = datetime.strptime(self.AppointmentDate, '%Y-%m-%d')
+                self.AppointmentDate = datetime.strptime(self.AppointmentDate, '%Y-%m-%d')
             except ValueError:
                 print("Please provide a valid date between 01-01 and 12-31.")
                 continue
-            if appointment_date < datetime.now() - timedelta(days=1):
+            if self.AppointmentDate < datetime.now() - timedelta(days=1):
                 is_match = None
                 print("Please provide the date at least today")
             if is_match is None:
                 print("Please provide a correct date format (1900-01-01).")
 
-    def change_appointment_time(self):
-        # Change appointment time
-        print("Provide appointment time")
-        is_match = None
-        while is_match is None:
             self.AppointmentTime = input("Appointment time (correct format: 00:00):")
             is_match = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
-            start_time = datetime.strptime('08:00', '%H:%M')
-            end_time = datetime.strptime('16:00', '%H:%M')
+            start_time = time(hour=8, minute=0)
+            end_time = time(hour=16, minute=0)
             try:
-                appointment_time = datetime.strptime(self.AppointmentTime, '%H:%M')
+                self.AppointmentTime = datetime.strptime(self.AppointmentTime, '%H:%M').time()
+                self.AppointmentDate = datetime.combine(self.AppointmentDate, self.AppointmentTime)
             except ValueError:
                 print("Please provide a valid time between 08:00 and 16:00")
                 is_match = None
                 continue
-            if appointment_time < start_time or appointment_time > end_time:
+            if self.AppointmentTime < start_time or self.AppointmentTime > end_time:
                 is_match = None
                 print("Please provide a valid time between 08:00 and 16:00")
             if is_match is None:
