@@ -1,5 +1,7 @@
-import pyodbc
+from SearchCustomer import *
 from UserInput import *
+from DatabaseConnection import *
+
 
 class PatientModding:
     """Modifying a Patient include add, modify appoint date, delete appointment"""
@@ -25,22 +27,6 @@ class PatientModding:
         self.pastAppDate = past_app_date
         self.pastIsAppear = past_is_appear
 
-    def upload_for_searching(self,first_name, last_name, date_of_birth, mother_maiden_name):
-        self.firstName = first_name
-        self.lastName = last_name
-        self.dateOfBirth = date_of_birth
-        self.motherMaidenName = mother_maiden_name
-
-    def connect_database(self):
-        # Connect to the database
-        cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
-                              "Server=.\SQLEXPRESS;"
-                              "Database=PatientRegistry;"
-                              "Trusted_Connection=yes;")
-
-        cursor = cnxn.cursor()
-        return cnxn,cursor
-
     def adding_Customer(self):
         # Upload a customer to the tables
 
@@ -57,7 +43,7 @@ class PatientModding:
                         "No")
 
         # Connect to the database
-        cnxn,cursor = self.connect_database()
+        cnxn,cursor = ConnectingToDatabase.connect_database(self)
 
         # Select the last PK ID from Patient table and +1 to it.
         id_last_number_query_patient = "SELECT TOP 1 ID FROM Patient ORDER BY ID Desc;"
@@ -87,31 +73,16 @@ class PatientModding:
         cursor.execute(query_Insert, id_Number_pastappointments, id_current_query, self.pastAppDate, self.pastIsAppear)
         cnxn.commit()
 
-    def search_customer(self):
-        # Searching customer by first name + last name + mother maiden name + dob return PK ID
+    def modifying_first_name(self):
 
-        # Connect to the database
-        cnxn, cursor = self.connect_database()
-
-        # Searching the patient giving back patient not found if there are no records in the table
-        userin = UserInput()
-        userin.change_first_name()
-        userin.change_last_name()
-        userin.change_dob()
-        userin.change_mother_maiden_name()
-        self.upload_for_searching(userin.FirstName,
-                                  userin.LastName,
-                                  userin.Dob,
-                                  userin.MotherMaidenName)
-
-        # Querying the result in the patient table
-        query_search = "SELECT ID FROM Patient WHERE FirstName=? and LastName=? and DateOfBirth=? and MotherMaidenName=?;"
-        cursor.execute(query_search, self.firstName, self.lastName, self.dateOfBirth, self.motherMaidenName)
-        row = cursor.fetchone()
-        try:
-            id_current_query = row[0]
-            return id_current_query
-        except:
-            print("The patient can't be found")
-
+        search = SearchingCustomer()
+        customer = search.search_customer()
+        if customer is not None:
+            change_first_name = UserInput()
+            change_name = change_first_name.change_first_name()
+            cnxn, cursor = ConnectingToDatabase.connect_database(self)
+            query_mod_first_name = "UPDATE Patient SET FirstName=? WHERE ID=?;"
+            cursor.execute(query_mod_first_name,change_name,customer)
+            cnxn.commit()
+    #Add all with data (last name, date of birth, mother maiden name, phone number, appointment date)
 

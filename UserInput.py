@@ -114,6 +114,8 @@ class UserInput:
             if is_match is None:
                 print("Please provide the first name in correct format (eg.:'Smith' or 'Smith-Black' or 'Smith Black')")
 
+        return self.FirstName
+
     def change_last_name(self):
         # Changing the last name
         print("Please provide last name.")
@@ -123,6 +125,8 @@ class UserInput:
             is_match = re.fullmatch(r"^([A-Z][a-z]{0,})?(?(1)([.][ ][A-Z][a-z]{0,}[.][ ][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}[.][ ][A-Z][a-z]{0,}[-][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}[.]|[.][ ][A-Z][a-z]{0,}[-][A-Z][a-z]{0,}|[.][ ][A-Z][a-z]{0,}|[-][A-Z][a-z]{0,})|[A-Z][a-z]{0,})$", self.LastName)
             if is_match is None:
                 print("Please provide the first name in correct format (eg.:'John' or 'J.' or 'Smith Black')")
+
+        return self.LastName
 
     def change_dob(self):
         # Changing the Date of birth
@@ -142,6 +146,8 @@ class UserInput:
             if is_match is None:
                 print("Please provide a correct date format (1900-01-01).")
 
+        return self.Dob
+
     def change_mother_maiden_name(self):
         # Changing mother maiden name.
         print("Provide mother maiden name.")
@@ -152,6 +158,8 @@ class UserInput:
             if is_match is None:
                 print("Please provide the mother maiden name in a correct form eg.: Sue Doe or Sue Doe-Black or Sue Doe Black or Sue D. Black")
 
+        return self.MotherMaidenName
+
     def change_phonenumber(self):
         # Changing phone number.
         print("Provide phone number.")
@@ -161,6 +169,8 @@ class UserInput:
             is_match = re.fullmatch(r"^[+][3][6][-][0-9]{2}[-][0-9]{3}[-][0-9]{4}$", self.Phone_number)
             if is_match is None:
                 print("Please provide a correct phone number format (+36-00-000-0000).")
+
+        return self.Phone_number
 
     def change_appointment_date(self):
         # Change appointment date and time
@@ -195,3 +205,5 @@ class UserInput:
                 print("Please provide a valid time between 08:00 and 16:00")
             if is_match is None:
                 print("Please provide a correct time format (08:00).")
+
+        return self.AppointmentDate
