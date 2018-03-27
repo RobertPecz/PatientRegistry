@@ -15,17 +15,21 @@ class PatientModding:
         self.pastIsAppear = None
 
     # Adding data to the class
-    def upload_all_data(self,first_name, last_name, date_of_birth, mother_maidenname, phone_number, appointment_date, past_app_date, past_is_appear):
+    def upload_all_data(self,first_name, last_name, date_of_birth, mother_maiden_name, phone_number, appointment_date, past_app_date, past_is_appear):
         self.firstName = first_name
         self.lastName = last_name
         self.dateOfBirth = date_of_birth
-        self.motherMaidenName = mother_maidenname
+        self.motherMaidenName = mother_maiden_name
         self.phoneNumber = phone_number
         self.appointmentDate = appointment_date
         self.pastAppDate = past_app_date
         self.pastIsAppear = past_is_appear
 
-    #def upload_for_searching(self, firstName):
+    def upload_for_searching(self,first_name, last_name, date_of_birth, mother_maiden_name):
+        self.firstName = first_name
+        self.lastName = last_name
+        self.dateOfBirth = date_of_birth
+        self.motherMaidenName = mother_maiden_name
 
     def connect_database(self):
         # Connect to the database
@@ -86,8 +90,28 @@ class PatientModding:
     def search_customer(self):
         # Searching customer by first name + last name + mother maiden name + dob return PK ID
 
-
         # Connect to the database
         cnxn, cursor = self.connect_database()
-        return
+
+        # Searching the patient giving back patient not found if there are no records in the table
+        userin = UserInput()
+        userin.change_first_name()
+        userin.change_last_name()
+        userin.change_dob()
+        userin.change_mother_maiden_name()
+        self.upload_for_searching(userin.FirstName,
+                                  userin.LastName,
+                                  userin.Dob,
+                                  userin.MotherMaidenName)
+
+        # Querying the result in the patient table
+        query_search = "SELECT ID FROM Patient WHERE FirstName=? and LastName=? and DateOfBirth=? and MotherMaidenName=?;"
+        cursor.execute(query_search, self.firstName, self.lastName, self.dateOfBirth, self.motherMaidenName)
+        row = cursor.fetchone()
+        try:
+            id_current_query = row[0]
+            return id_current_query
+        except:
+            print("The patient can't be found")
+
 

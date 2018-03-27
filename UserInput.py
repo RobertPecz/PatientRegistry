@@ -19,39 +19,6 @@ class UserInput:
         except (ValueError, TypeError):
             return default
 
-    def dumptime(self):
-        is_match = None
-        while is_match is None:
-            self.AppointmentDate = input("Appointment Date (correct format: 1900-01-01):")
-            is_match = re.fullmatch(r"^[2][0-9]{3}[-][0-1][0-9]{1}[-][0-9]{2}$", self.AppointmentDate)
-            try:
-                self.AppointmentDate = datetime.strptime(self.AppointmentDate, '%Y-%m-%d')
-            except ValueError:
-                print("Please provide a valid date between 01-01 and 12-31.")
-                continue
-            if self.AppointmentDate < datetime.now() - timedelta(days=1):
-                is_match = None
-                print("Please provide the date at least today")
-            if is_match is None:
-                print("Please provide a correct date format (1900-01-01).")
-
-            self.AppointmentTime = input("Appointment time (correct format: 00:00):")
-            is_match = re.fullmatch(r"^[0-9]{2}[:][0-9]{2}$", self.AppointmentTime)
-            start_time = time(hour=8,minute=0)
-            end_time = time(hour=16, minute=0)
-            try:
-                self.AppointmentTime = datetime.strptime(self.AppointmentTime, '%H:%M').time()
-                self.AppointmentDate = datetime.combine(self.AppointmentDate,self.AppointmentTime)
-            except ValueError:
-                print("Please provide a valid time between 08:00 and 16:00")
-                is_match = None
-                continue
-            if self.AppointmentTime < start_time or self.AppointmentTime > end_time:
-                is_match = None
-                print("Please provide a valid time between 08:00 and 16:00")
-            if is_match is None:
-                print("Please provide a correct time format (08:00).")
-
     def adding_new_patient(self):
         # Adding a new customer
 
@@ -163,7 +130,6 @@ class UserInput:
         is_match = None
         while is_match is None:
             self.Dob = input("Date of Birth (correct format: 1900-01-01):")
-            print (self.Dob)
             is_match = re.fullmatch(r"^[1-2][0-9]{3}[-][0-1][0-9]{1}[-][0-9]{2}$", self.Dob)
             try:
                 dob_date = datetime.strptime(self.Dob, '%Y-%m-%d')
