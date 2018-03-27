@@ -1,5 +1,5 @@
 import pyodbc
-import time
+from UserInput import *
 
 class PatientModding:
     """Modifying a Patient include add, modify appoint date, delete appointment"""
@@ -15,19 +15,19 @@ class PatientModding:
         self.pastIsAppear = None
 
     # Adding data to the class
-    def upload_all_data(self,firstName, lastName, dateofbirth, motherMaidenName, phoneNumber, appointmentDate, pastAppDate, pastIsAppear):
-        self.firstName = firstName
-        self.lastName = lastName
-        self.dateOfBirth = dateofbirth
-        self.motherMaidenName = motherMaidenName
-        self.phoneNumber = phoneNumber
-        self.appointmentDate = appointmentDate
-        self.pastAppDate = pastAppDate
-        self.pastIsAppear = pastIsAppear
+    def upload_all_data(self,first_name, last_name, date_of_birth, mother_maidenname, phone_number, appointment_date, past_app_date, past_is_appear):
+        self.firstName = first_name
+        self.lastName = last_name
+        self.dateOfBirth = date_of_birth
+        self.motherMaidenName = mother_maidenname
+        self.phoneNumber = phone_number
+        self.appointmentDate = appointment_date
+        self.pastAppDate = past_app_date
+        self.pastIsAppear = past_is_appear
 
-    def adding_Customer(self):
-        # Upload a customer to the tables
+    #def upload_for_searching(self, firstName):
 
+    def connect_database(self):
         # Connect to the database
         cnxn = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
                               "Server=.\SQLEXPRESS;"
@@ -35,6 +35,25 @@ class PatientModding:
                               "Trusted_Connection=yes;")
 
         cursor = cnxn.cursor()
+        return cnxn,cursor
+
+    def adding_Customer(self):
+        # Upload a customer to the tables
+
+        # Get the new patient necessary data from UserInput
+        userin = UserInput()
+        userin.adding_new_patient()
+        self.upload_all_data(userin.FirstName,
+                        userin.LastName,
+                        userin.Dob,
+                        userin.MotherMaidenName,
+                        userin.Phone_number,
+                        userin.AppointmentDate,
+                        userin.AppointmentDate,
+                        "No")
+
+        # Connect to the database
+        cnxn,cursor = self.connect_database()
 
         # Select the last PK ID from Patient table and +1 to it.
         id_last_number_query_patient = "SELECT TOP 1 ID FROM Patient ORDER BY ID Desc;"
@@ -63,4 +82,12 @@ class PatientModding:
         query_Insert = "INSERT INTO PastAppointments(ID, PatientID, PastAppTime, IsAppear) VALUES(?,?,?,?);"
         cursor.execute(query_Insert, id_Number_pastappointments, id_current_query, self.pastAppDate, self.pastIsAppear)
         cnxn.commit()
+
+    def search_customer(self):
+        # Searching customer by first name + last name + mother maiden name + dob return PK ID
+
+
+        # Connect to the database
+        cnxn, cursor = self.connect_database()
         return
+
