@@ -1,6 +1,7 @@
 import re
 from datetime import *
 
+
 class UserInput:
     """Patient registry input by the user"""
 

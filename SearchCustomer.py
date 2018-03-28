@@ -2,8 +2,13 @@ from DatabaseConnection import *
 from UserInput import *
 
 
-
 class SearchingCustomer:
+
+    def __init__(self):
+        self.firstName = None
+        self.lastName = None
+        self.dateOfBirth = None
+        self.motherMaidenName = None
 
     def upload_for_searching(self,first_name, last_name, date_of_birth, mother_maiden_name):
         self.firstName = first_name

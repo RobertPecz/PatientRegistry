@@ -1,5 +1,6 @@
 import pyodbc
 
+
 class ConnectingToDatabase:
     # Connecting to a database
 
@@ -11,4 +12,4 @@ class ConnectingToDatabase:
                               "Trusted_Connection=yes;")
 
         cursor = cnxn.cursor()
-        return cnxn,cursor
+        return cnxn, cursor
