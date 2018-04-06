@@ -1,6 +1,6 @@
-from PatientModify import *
+from PastAppointments import *
 
-#adding a customer from userinputs input
-adding_new_customer = PatientModding()
-
-adding_new_customer.adding_customer()
+# Asking the customer all past appointments date
+past_appointments = PastAppointments()
+query_result = past_appointments.get_all_past_appointments()
+print(query_result)

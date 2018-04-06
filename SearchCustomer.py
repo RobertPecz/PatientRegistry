@@ -13,7 +13,7 @@ class SearchingCustomer:
         self.appointmentDate = None
         self.pastAppDate = None
 
-    def upload_for_searching(self, first_name, last_name, date_of_birth, mother_maiden_name, phone_number, appointment_date):
+    def upload_for_searching(self, first_name, last_name, date_of_birth, mother_maiden_name, phone_number=None, appointment_date=None):
         self.firstName = first_name
         self.lastName = last_name
         self.dateOfBirth = date_of_birth

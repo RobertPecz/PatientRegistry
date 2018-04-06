@@ -16,8 +16,8 @@ class PatientModding:
         self.pastAppointments = None
         self.pastIsAppear = None
 
-    # Adding data to the class
-    def upload_all_data(self,first_name, last_name, date_of_birth, mother_maiden_name, phone_number, appointment_date, past_is_appear):
+    def upload_all_data(self, first_name, last_name, date_of_birth, mother_maiden_name, phone_number, appointment_date, past_is_appear):
+        # Adding data to the class
         self.firstName = first_name
         self.lastName = last_name
         self.dateOfBirth = date_of_birth
